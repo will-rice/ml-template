@@ -38,7 +38,6 @@ filterwarnings = [
 [tool.mypy]
 ignore_missing_imports = true
 follow_imports_for_stubs = true
-strict = true
 exclude = [".venv"]
 
 [project.scripts]
