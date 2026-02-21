@@ -42,8 +42,5 @@ convention = "google"
 [tool.pytest.ini_options]
 filterwarnings = ["ignore::DeprecationWarning"]
 
-[tool.ty]
-environment.python-version = "3.12"
-
 [project.scripts]
 train = "template.scripts.train:main"
