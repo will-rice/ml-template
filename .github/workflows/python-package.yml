@@ -31,6 +31,8 @@ jobs:
       - name: Install uv
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Install Node.js dependencies for prettier-plugin-toml
+        run: npm install --no-save prettier prettier-plugin-toml
       - name: Run pre-commit hook
         run: |
           uv run pre-commit run -a
