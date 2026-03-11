@@ -24,9 +24,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - name: Install uv
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Install Node.js dependencies for prettier-plugin-toml
+        run: npm install --no-save prettier prettier-plugin-toml
       - name: Run pre-commit hook
         run: |
           uv run pre-commit run -a
