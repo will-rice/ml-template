@@ -11,6 +11,9 @@ repos:
     rev: v1.0.7
     hooks:
       - id: prettier-format
+        args: ["--write", "--ignore-unknown"]
+        additional_dependencies:
+          - prettier@3.6.2
   - repo: local
     hooks:
       - id: ruff-format
