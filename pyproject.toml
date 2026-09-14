@@ -7,18 +7,19 @@ authors = [{ name = "Will Rice", email = "wrice20@gmail.com" }]
 requires-python = ">=3.12"
 dependencies = [
   "git-python>=1.0.3",
-  "lightning>=2.5.5",
-  "ty>=0.0.18",
-  "pre-commit>=4.1.0",
-  "pydantic>=2.12.2",
+  "lightning>=2.6.6",
+  "ty>=0.0.80",
+  "pre-commit>=4.6.2",
+  "pydantic>=2.13.5",
   "pydocstyle>=6.3.0",
-  "pytest>=8.3.4",
-  "python-dotenv>=1.1.1",
-  "ruff>=0.9.7",
-  "torch>=2.8.0",
-  "torchaudio>=2.8.0",
-  "torchvision>=0.23.0",
-  "wandb>=0.22.2",
+  "pytest>=9.1.1",
+  "python-dotenv>=1.2.3",
+  "ruff>=0.16.7",
+  "wandb>=0.30.0",
+  "torch>=2.14.0",
+  "torchvision>=0.29.0",
+  "torchaudio>=2.11.0",
+  "torchcodec>=0.16.0",
 ]
 
 [build-system]
