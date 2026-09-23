@@ -1,15 +1,17 @@
-# Machine Learning Project Template
+# Kaggle Machine Learning Template
 
-A batteries-included template for PyTorch machine learning projects using Lightning, wandb, and modern Python tooling.
+A Kaggle-focused template for PyTorch machine learning projects using Lightning, wandb, and modern Python tooling.
 
 ## Features
 
 - **PyTorch Lightning**: Structured training framework with minimal boilerplate
+- **Kaggle-first Workflow**: Defaults to `/kaggle/input` and `/kaggle/working` when running in Kaggle
 - **Pydantic Configuration**: Type-safe configuration management
 - **Weights & Biases**: Integrated experiment tracking
 - **Modern Tooling**: Built with `uv` for fast dependency management
-- **Code Quality**: Pre-configured with `ruff`, `mypy`, `pytest`, and `pre-commit` hooks
+- **Code Quality**: Pre-configured with `ruff`, `ty`, `pytest`, and `pre-commit` hooks
 - **Git-based Versioning**: Automatic experiment naming using git commit hashes
+- **Submission Helpers**: Utilities for generating competition-ready CSV submissions
 
 ## Project Structure
 
@@ -36,7 +38,7 @@ A batteries-included template for PyTorch machine learning projects using Lightn
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 2. Use this template for a new project
+### 2. Use this template for a new Kaggle project
 
 When creating a new project from this template:
 
@@ -63,7 +65,7 @@ Copy the example environment file and add your API keys:
 
 ```bash
 cp .env.example .env
-# Edit .env and add your wandb API key and other credentials
+# Edit .env and add your Kaggle, wandb, and other credentials
 ```
 
 ### 5. Install pre-commit hooks
@@ -79,24 +81,32 @@ uv run pre-commit install
 Run the training script:
 
 ```bash
-uv run train <data_root> --project my-project --num_devices 1
+uv run train --competition titanic --project my-project --num_devices 1
 ```
 
 Available arguments:
 
-- `data_root`: Path to your dataset (required)
-- `--project`: Wandb project name (default: "jigsaw-2025")
+- `data_root`: Optional path to your dataset root. Defaults to `data/<competition>` locally or `/kaggle/input/<competition>` in Kaggle
+- `--competition`: Kaggle competition slug (default: `"titanic"` from config)
+- `--project`: Wandb project name (default: `"kaggle-template"`)
 - `--num_devices`: Number of GPUs to use (default: 1)
 - `--num_workers`: Number of data loading workers (default: 12)
-- `--log_root`: Directory for logs and checkpoints (default: "logs")
+- `--log_root`: Directory for logs and checkpoints. Defaults to `logs/` locally or `/kaggle/working` in Kaggle
+- `--submission_path`: Where to write the submission CSV. Defaults to `logs/<competition>-submission.csv` locally or `/kaggle/working/<competition>-submission.csv` in Kaggle
 - `--checkpoint_path`: Resume from checkpoint
 - `--weights_path`: Load model weights
 - `--debug`: Enable debug mode
 - `--fast_dev_run`: Run a quick test with minimal data
 
+Typical workflows:
+
+- **Local development**: `uv run train --competition titanic`
+- **Kaggle notebook**: `uv run train --competition titanic --log_root /kaggle/working`
+- **Custom data mount**: `uv run train /path/to/data --competition titanic`
+
 ### Configuration
 
-Edit `src/template/config.py` to customize hyperparameters:
+Edit `src/template/config.py` to customize hyperparameters and competition defaults:
 
 ```python
 from pydantic import BaseModel
@@ -115,7 +125,16 @@ class Config(BaseModel):
     learning_rate: float = 1e-4
     min_learning_rate: float = 1e-6
     weight_decay: float = 1e-2
+
+    # Kaggle
+    competition_name: str = "titanic"
+    submission_id_column: str = "PassengerId"
+    submission_target_column: str = "Survived"
 ```
+
+### Creating submissions
+
+Use `template.kaggle.write_submission(...)` to write a CSV with the exact ID and target column names required by your competition.
 
 ### Implementing Your Model
 
@@ -158,7 +177,7 @@ uv run pytest
 ### Type Checking
 
 ```bash
-uv run mypy src/
+uv run ty check
 ```
 
 ### Linting and Formatting
@@ -189,7 +208,7 @@ Core dependencies:
 Development tools:
 
 - **ruff**: Fast Python linter and formatter
-- **mypy**: Static type checker
+- **ty**: Static type checker
 - **pytest**: Testing framework
 - **pre-commit**: Git hooks for code quality
 

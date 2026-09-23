@@ -1,5 +1,7 @@
 """Main config class."""
 
+from pathlib import Path
+
 from pydantic import BaseModel
 
 
@@ -22,3 +24,10 @@ class Config(BaseModel):
 
     # Model
     base_model: str = "some_pretrained_model"
+
+    # Kaggle
+    competition_name: str = "titanic"
+    submission_id_column: str = "PassengerId"
+    submission_target_column: str = "Survived"
+    kaggle_input_root: Path = Path("/kaggle/input")
+    kaggle_working_root: Path = Path("/kaggle/working")

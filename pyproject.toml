@@ -1,7 +1,7 @@
 [project]
 name = "template"
 version = "0.1.0"
-description = "A general purpose machine learning project template."
+description = "A Kaggle-focused machine learning project template."
 readme = "README.md"
 authors = [{ name = "Will Rice", email = "wrice20@gmail.com" }]
 requires-python = ">=3.12"
