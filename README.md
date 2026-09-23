@@ -8,7 +8,7 @@ A batteries-included template for PyTorch machine learning projects using Lightn
 - **Pydantic Configuration**: Type-safe configuration management
 - **Weights & Biases**: Integrated experiment tracking
 - **Modern Tooling**: Built with `uv` for fast dependency management
-- **Code Quality**: Pre-configured with `ruff`, `mypy`, `pytest`, and `pre-commit` hooks
+- **Code Quality**: Pre-configured with `ruff`, `ty`, `pytest`, and `pre-commit` hooks
 - **Git-based Versioning**: Automatic experiment naming using git commit hashes
 
 ## Project Structure
@@ -158,7 +158,7 @@ uv run pytest
 ### Type Checking
 
 ```bash
-uv run mypy src/
+uv run ty check
 ```
 
 ### Linting and Formatting
@@ -189,7 +189,7 @@ Core dependencies:
 Development tools:
 
 - **ruff**: Fast Python linter and formatter
-- **mypy**: Static type checker
+- **ty**: Static type checker
 - **pytest**: Testing framework
 - **pre-commit**: Git hooks for code quality
 
