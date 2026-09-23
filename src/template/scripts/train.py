@@ -1,5 +1,6 @@
 """Train script."""
 
+import json
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -8,7 +9,11 @@ from git import Repo
 from lightning import seed_everything
 
 from template.config import Config
-from template.kaggle import default_data_root, default_output_root, is_kaggle_environment
+from template.kaggle import (
+    default_data_root,
+    default_output_root,
+    is_kaggle_environment,
+)
 
 
 def main() -> None:
@@ -39,7 +44,9 @@ def main() -> None:
     log_root = args.log_root or (
         config.kaggle_working_root if running_in_kaggle else default_output_root()
     )
-    submission_path = args.submission_path or log_root / f"{competition_name}-submission.csv"
+    submission_path = (
+        args.submission_path or log_root / f"{competition_name}-submission.csv"
+    )
 
     seed_everything(config.seed, workers=True)
 
@@ -49,6 +56,22 @@ def main() -> None:
     experiment_path = log_root / f"{model_name}-{git_hash}"
     experiment_path.mkdir(exist_ok=True, parents=True)
     submission_path.parent.mkdir(exist_ok=True, parents=True)
+    run_config_path = experiment_path / "run_config.json"
+    run_config_path.write_text(
+        json.dumps(
+            {
+                "competition_name": competition_name,
+                "data_root": str(data_root),
+                "project": args.project,
+                "log_root": str(log_root),
+                "submission_path": str(submission_path),
+                "num_devices": args.num_devices,
+                "num_workers": args.num_workers,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
 
 if __name__ == "__main__":
