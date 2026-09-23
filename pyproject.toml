@@ -4,9 +4,9 @@ version = "0.1.0"
 description = "A general purpose machine learning project template."
 readme = "README.md"
 authors = [{ name = "Will Rice", email = "wrice20@gmail.com" }]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
-  "git-python>=1.0.3",
+  "git-python>=1.1.1",
   "lightning>=2.6.6",
   "pre-commit>=4.6.2",
   "pydantic>=2.13.5",
@@ -28,6 +28,9 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-name = ["template"]
+
+[tool.uv.sources]
+git-python = { git = "https://github.com/pynickle/git-python.git" }
 
 [tool.ruff.lint.isort]
 known-first-party = ["template"]
