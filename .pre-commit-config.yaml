@@ -35,5 +35,5 @@ repos:
         name: pytest
         language: system
         entry: uv run python -m pytest
-        files: ^(src|tests)/
+        files: ^(src|tests)/.*\.py$
         pass_filenames: false
